@@ -1,0 +1,15 @@
+# Secrets and API keys
+secrets.yaml
+.env
+*.key
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
