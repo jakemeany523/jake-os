@@ -2,6 +2,7 @@
 secrets.yaml
 .env
 *.key
+.spotify-token.json
 
 # OS files
 .DS_Store
@@ -13,3 +14,8 @@ Thumbs.db
 *~
 .vscode/
 .idea/
+
+# Sensitive data
+learning-memory.json
+content-experiments.json
+*.lock*

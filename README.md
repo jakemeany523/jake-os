@@ -1,6 +1,6 @@
 # Jake-OS: AI Operating System for a Solo Marketing Department
 
-A complete AI-augmented operating system built by one marketer to run an entire marketing function. 11 autonomous agents, 5 custom skills, 1 standalone monitoring agent, 1 custom Fireflies MCP server, all orchestrated through Claude, Slack, Notion, Google Calendar, Ahrefs, and Fireflies.
+A complete AI-augmented operating system built by one marketer to run an entire marketing function. 11 autonomous agents, 16 custom skills, a persistent memory system, a standalone monitoring agent, a custom Fireflies MCP server, and a self-correcting feedback architecture, all orchestrated through Claude, Slack, Notion, Google Calendar, Ahrefs, Pipedrive, and Fireflies.
 
 **Built with:** Claude (Anthropic), Claude Code, Cowork, Python, TypeScript, MCP (Model Context Protocol)
 
@@ -8,11 +8,11 @@ A complete AI-augmented operating system built by one marketer to run an entire 
 
 ## The Problem
 
-I'm a solo marketer at an AI startup. I run content, social, SEO, AEO (Answer Engine Optimization), competitive intel, influencer partnerships, and brand. The workload is designed for a team of 4-5 people. Instead of hiring, I built an AI operating system that handles the repetitive, high-volume work so I can focus on strategy and creative.
+Solo marketer at an AI startup. Content, social, SEO, AEO (Answer Engine Optimization), competitive intel, influencer partnerships, CRM, and brand. The workload is designed for a team of 4-5 people. Instead of hiring, I built an AI operating system that handles the repetitive, high-volume work so I can focus on strategy and creative.
 
-**Before Jake-OS:** 15 pain points. Tasks dying at every tool boundary. Meeting action items evaporating. 25-30 hours/week lost to unstructured evenings. Follow-ups vanishing across Slack, email, Telegram, and phone. No single system.
+**Before Jake-OS:** Tasks dying at every tool boundary. Meeting action items evaporating. Follow-ups vanishing across Slack, email, Telegram, and phone. No single system.
 
-**After Jake-OS:** 11 agents running daily/weekly/monthly on autopilot. Content reviewed automatically against brand guidelines. Competitive intel surfaced weekly without manual research. Morning briefs delivered to Slack before I sit down. Meeting action items automatically converted to Notion tasks. The system comes to me; I don't go to it.
+**After Jake-OS:** 11 agents running daily/weekly/monthly on autopilot. Content reviewed automatically against brand guidelines. Competitive intel surfaced weekly without manual research. Morning briefs delivered to Slack before I sit down. Meeting action items automatically converted to Notion tasks. CRM updated from meeting transcripts. The system comes to me; I don't go to it.
 
 ---
 
@@ -20,17 +20,17 @@ I'm a solo marketer at an AI startup. I run content, social, SEO, AEO (Answer En
 
 ```
 +------------------------------------------------------------------+
-|                         NOTION (Hub)                            |
-|  +----------+ +--------+ +-----------+ +----------+            |
-|  | Master   | |Projects| | Marketing | | Follow   |            |
-|  | Tasks DB | |DB      | | Calendar  | | Ups DB   |            |
-|  +----+-----+ +---+----+ +-----+-----+ +----+-----+            |
-|       +------+-----+----------+-------------+                   |
-|  +------------------------------------------+                   |
-|  |         DAILY DASHBOARD PAGE             |                   |
-|  | Today | Inbox | Week | Overdue           |                   |
-|  | Waiting On | Skill Tracks               |                   |
-|  +------------------------------------------+                   |
+|                         NOTION (Hub)                              |
+|  +----------+ +--------+ +-----------+ +----------+              |
+|  | Master   | |Projects| | Marketing | | Follow   |              |
+|  | Tasks DB | |DB      | | Calendar  | | Ups DB   |              |
+|  +----+-----+ +---+----+ +-----+-----+ +----+-----+              |
+|       +------+-----+----------+-------------+                     |
+|  +------------------------------------------+                     |
+|  |         DAILY DASHBOARD PAGE             |                     |
+|  | Today | Inbox | Week | Overdue           |                     |
+|  | Waiting On | Skill Tracks               |                     |
+|  +------------------------------------------+                     |
 +---------------------------+--------------------------------------+
                             |
        +--------------------+--------------------+
@@ -56,21 +56,21 @@ I'm a solo marketer at an AI startup. I run content, social, SEO, AEO (Answer En
  | 1:00 PM   |        | 12:00 PM  |        | Fri 4 PM    |
  +-----------+        +-----------+        +-------------+
                              |
-              +--------------+
-              v
-+-----------------------------+
-|  FIREFLIES MCP SERVER       |
-|  (Custom TypeScript/GraphQL)|
-|  Transcripts + summaries    |
-|  + action items. 4 tools.   |
-+-----------+-----------------+
+              +--------------+--------------+
+              v                             v
++-----------------------------+  +-----------------------------+
+|  FIREFLIES MCP SERVER       |  |  PIPEDRIVE CRM MCP          |
+|  (Custom TypeScript/GraphQL)|  |  Deals, contacts, orgs,     |
+|  Transcripts + summaries    |  |  activities, notes.          |
+|  + action items. 4 tools.   |  |  Full read/write access.     |
++-----------+-----------------+  +-----------------------------+
             |
             v
 +-----------------------------+
-|  meeting-to-tasks           |
-|  Fireflies -> Notion        |
-|  Auto-creates tasks from    |
-|  meeting action items       |
+|  MEMORY SYSTEM              |
+|  Persistent context across  |
+|  sessions. 50+ files in 8   |
+|  categories. Self-updating. |
 +-----------------------------+
 ```
 
@@ -84,76 +84,136 @@ All agents run on cron schedules via Claude's scheduled task system. They execut
 
 | Agent | Schedule | What It Does |
 |-------|----------|-------------|
-| **Morning Commander** | 6:15 AM daily | Reads Google Calendar, Notion tasks, Gmail action items, and yesterday's Fireflies meeting transcripts. Automatically creates Notion tasks from any meeting action items assigned to Jake. Delivers: today's top 5 priorities, meetings, specific workout (phase-aware from 12-week plan), overdue items, evening plan. |
+| **Morning Commander** | 6:15 AM daily | Reads Google Calendar, Notion tasks, Gmail action items, and yesterday's Fireflies meeting transcripts. Automatically creates Notion tasks from any meeting action items. Delivers: today's top 5 priorities, meetings, overdue items, evening plan. |
 | **Morning Brief** | 7:00 AM daily | Scans overnight AI/model/benchmark news (strict 24-hour filter). Checks Slack for action items. Pulls Ahrefs SEO data. Saves a structured context file that the Social Drafter reads 25 minutes later to produce chained content. |
 | **Social Drafter** | 7:30 AM daily | Reads morning brief context and reactive intel from the day before. Scouts Stratix evaluations. Creates branded data visualizations. Drafts Twitter/X and LinkedIn posts. Runs every draft through the Copy Reviewer skill. Delivers a ready-to-publish package. |
-| **Midday Update** | 1:00 PM daily | Scans Gmail for morning emails requiring action. Checks Slack for unresolved threads. Pulls this morning's Fireflies meetings to surface action items from meetings Jake just came out of. Lists afternoon calendar. Push-based: surfaces only what needs attention in the next 4 hours. |
-| **Reactive Intel Monitor** | 12:00 PM daily | Scans for breaking AI model launches, benchmark results, competitor moves, and trending evaluation discussions. Drafts reactive content if something is worth responding to. Saves context file for the Social Drafter. DMs Jake only if something is actually worth acting on. |
+| **Midday Update** | 1:00 PM daily | Scans Gmail for morning emails requiring action. Checks Slack for unresolved threads. Pulls morning Fireflies meetings to surface action items. Lists afternoon calendar. Push-based: surfaces only what needs attention in the next 4 hours. |
+| **Reactive Intel Monitor** | 12:00 PM daily | Scans for breaking AI model launches, benchmark results, competitor moves, and trending evaluation discussions. Drafts reactive content if something is worth responding to. Saves context file for the Social Drafter. |
 
 ### Weekly Agents
 
 | Agent | Schedule | What It Does |
 |-------|----------|-------------|
-| **Weekly Performance Feedback** | Friday 4:00 PM | Primary data source: GA4 MCP (real Google Analytics). Pulls week-over-week site metrics, top pages, traffic sources, daily trends. Also reads this week's Fireflies meetings to surface sales signals or Archie/Marc feedback on marketing performance. Produces the performance brief that feeds Sunday's Weekly Architect. |
-| **Agent Review** | Friday 3:00 PM | Audits all skills, scheduled tasks, and MCP connectors. Checks Fireflies MCP health: verifies it is live and all 6 tasks that depend on it are pulling data. Flags if the Fireflies bot stopped being admitted to meetings. Rates each component A through F. |
+| **Weekly Performance Feedback** | Friday 4:00 PM | Primary data source: GA4 MCP (real Google Analytics). Pulls week-over-week site metrics, top pages, traffic sources, daily trends. Also reads Fireflies meetings to surface sales signals or leadership feedback. Produces the performance brief that feeds Sunday's Weekly Architect. |
+| **Agent Review** | Friday 3:00 PM | Audits all skills, scheduled tasks, and MCP connectors. Checks Fireflies MCP health: verifies it is live and all 6 tasks that depend on it are pulling data. Rates each component A through F. |
 | **John Q Batch** | Sunday 6:00 PM | Generates 3-5 satirical LinkedIn posts for a parody character account. John Q is a fictional "Chief AI Transformation Evangelist" who posts aggressive AI-slop content with complete sincerity, but every post has a genuinely sharp insight buried inside. |
-| **Weekly Architect** | Sunday 7:00 PM | Reads GA4-backed performance brief, content log, and experiment tracker. Pulls this week's Fireflies transcripts and automatically creates Notion tasks for any commitments Jake made to Archie or Raj. Builds next week's day-by-day priority map with every priority tied to a data point or a meeting commitment. |
+| **Weekly Architect** | Sunday 7:00 PM | Reads GA4-backed performance brief, content log, and experiment tracker. Pulls this week's Fireflies transcripts and automatically creates Notion tasks for any commitments made. Builds next week's day-by-day priority map with every priority tied to a data point or a meeting commitment. |
 
 ### Monthly Agent
 
 | Agent | Schedule | What It Does |
 |-------|----------|-------------|
-| **Monthly Strategist** | 1st of month, 8:00 AM | Full month review using GA4 MCP data. Pulls 30 days of Fireflies transcripts to surface strategic decisions, product updates from Marc, sales signals from Raj, and customer discovery insights. Month-over-month comparison table. Next month's priorities each tied to a data point or meeting intel. |
+| **Monthly Strategist** | 1st of month, 8:00 AM | Full month review using GA4 MCP data. Pulls 30 days of Fireflies transcripts to surface strategic decisions, product updates, sales signals, and customer discovery insights. Month-over-month comparison table. Next month's priorities each tied to a data point or meeting intel. |
 
 ### On-Demand Agent
 
 | Agent | Trigger | What It Does |
 |-------|---------|-------------|
-| **Meeting to Tasks** | Called by Morning Commander and Weekly Architect, or manually | Pulls Fireflies transcripts for a specified date range. Extracts action items assigned to Jake. Creates real Notion tasks (Status: Inbox) for each one. Reports back to Slack with a list of tasks created. Ensures meeting commitments land in Notion, not just in a Slack brief that gets buried. |
+| **Meeting to Tasks** | Called by Morning Commander and Weekly Architect, or manually | Pulls Fireflies transcripts for a specified date range. Extracts action items. Creates real Notion tasks (Status: Inbox) for each one. Ensures meeting commitments land in Notion, not just in a Slack brief. |
 
 ---
 
-## Custom Skills (5 Built)
+## Custom Skills (16 Built)
 
-Skills are reusable prompt-and-tool bundles that execute specific workflows. Each was iterated through eval cycles to reach production quality.
+Skills are reusable prompt-and-tool bundles that execute specific workflows. Each was iterated through eval cycles.
 
-### Copy Reviewer
+### Content Creation & Distribution
 
-**What:** 12-rule content review engine that checks any marketing content against brand voice guidelines.
+| Skill | What It Does |
+|-------|-------------|
+| **Social Content Drafter** | Drafts publish-ready social content for Twitter/X and LinkedIn with copy-reviewer rules baked into generation, live Stratix data integration, branded graphics, and narrative alignment. The core content creation skill. |
+| **Blog Writer Pipeline** | End-to-end article production. Takes a target keyword and chains Ahrefs MCP (keyword + SERP research), Copy Reviewer (brand voice enforcement), and graphics generation into a single autonomous workflow with one approval gate at the outline stage. |
+| **Blog Production Pipeline** | Full blog workflow from research through SEO/AEO optimization, copy review, and CMS insertion via Framer. Bridges research, writing, quality control, and publishing. |
+| **LinkedIn Education Drafter** | LinkedIn-specific educational content for enterprise buyers and tech leaders. Frameworks, insights, and decision-making narratives rather than benchmark charts. |
+| **Content Repurposer** | Converts one content asset into multi-platform distribution packages: Twitter threads, LinkedIn posts, newsletter excerpts, social snippets. Each platform gets native content, not copy-pasted reformats. |
+| **Benchmark Drop** | Automates benchmark-drop workflow: pulls Stratix evaluation data, identifies SOTA results and regressions, generates publish-ready social copy and branded PNG comparison charts. |
 
-**Rules enforced:** banned phrase detection (47 phrases), AI slop scoring, em dash ban (zero tolerance), "so what" test (every post needs narrative context), product showcase verification, CTA check, platform-specific formatting, ICP coverage, differentiation test, tone calibration, language preferences, outdated model reference detection.
+### Quality & Brand
 
-**Eval results:** Iterated through 3 versions. v1: 88% pass rate on test corpus. v2: 96%. v3: 100%.
+| Skill | What It Does |
+|-------|-------------|
+| **Copy Reviewer** | 12-rule content review engine. Checks any marketing content against brand voice guidelines: 47 banned phrases, AI slop scoring, em dash ban, "so what" test, product showcase verification, CTA check, platform-specific formatting, ICP coverage, differentiation test, tone calibration, outdated model detection. Iterated through 3 versions to 100% eval pass rate. |
+| **Strategic Drift Detector** | Detects semantic drift when skills, scheduled tasks, and content files fall out of sync with source-of-truth memory context files. Catches stale differentiators, outdated model counts, misaligned competitive framing, and product positioning changes. |
 
-**Integration:** Runs automatically inside the Social Drafter agent. Every draft gets reviewed before it reaches me.
+### Intelligence & Research
 
-### Competitive Intelligence Scanner
+| Skill | What It Does |
+|-------|-------------|
+| **Competitive Intel Scanner** | Weekly competitive research across 7 competitors using web search and Ahrefs MCP. Compares against a stored baseline from the previous scan. Surfaces what actually changed. Output: 1-page brief designed for 5-minute review. |
+| **Viral Content Scout** | Monitors competitor Twitter accounts, AI thought leaders, and trending evaluation content. Identifies engagement opportunities: high-signal moments to quote-tweet, reply to, or riff on with original angles. |
+| **Performance Analytics** | On-demand marketing analysis pulling from GA4, Ahrefs, Slack, web search, and content logs. Produces actionable insights about content effectiveness, traffic, SEO rankings, and channel ROI. |
 
-**What:** Weekly competitive research across 5 primary competitors using web search and Ahrefs MCP tools.
+### CRM & Meeting Automation
 
-**Process:** Pulls latest news, product announcements, hiring signals, content strategy changes, and domain metrics for each competitor. Compares against a stored baseline from the previous scan. Surfaces what actually changed.
+| Skill | What It Does |
+|-------|-------------|
+| **Meeting Prep Generator** | Auto-generates meeting prep briefs by pulling CRM data (Pipedrive), email history, Fireflies transcripts, and calendar context. Outputs a 2-minute actionable brief with attendee context, deal status, last interactions, and talking points. |
+| **Post-Meeting Processor** | Processes completed meetings: pulls Fireflies transcripts, generates follow-up emails, CRM activity logs, Notion tasks, and deal stage updates. Automates post-meeting admin into a single approval step. |
 
-**Output:** 1-page structured brief designed to be reviewed in under 5 minutes.
+### Operations & Tracking
 
-### Data Visualization Generator
+| Skill | What It Does |
+|-------|-------------|
+| **Influencer Blitz Tracker** | Tracks influencer campaign across outreach status, creator responses, deliverables, spend, and ROI metrics. Maintains a persistent tracker with status for each creator and partner. |
+| **Phase Tracker** | Checks progress against the 90-Day Plan, tracking phase completion, milestone status, and weekly focus alignment. Identifies what's done, behind schedule, or needs attention. |
+| **Shareable Report Formatter** | Transforms raw report output into polished, shareable documents (PDF, slides, formatted docs) suitable for leadership or external stakeholder distribution. |
 
-**What:** Branded chart/graph creation skill that enforces visual identity standards.
+---
 
-**Capabilities:** Bar charts, line charts, scatter plots, comparison graphics, social cards. Every output gets: brand colors (specific hex values), official logo placement (bottom-right, auto-detects light/dark background), footer text, automatic overlap detection, date stripping (brand rule: no dates on graphics).
+## Memory System (Persistent Context)
 
-### Logo Compositing
+Jake-OS includes a persistent memory architecture that gives every session and agent access to accumulated context. The system maintains 50+ files across 8 categories, enabling session continuity and institutional knowledge retention.
 
-**What:** Adds official brand logo watermark to any image.
+### Memory Architecture
 
-**How:** Bundles exact SVG logo assets (color and white variants). Auto-detects image brightness at the placement region to select the correct variant. Never recreates or approximates the logo; always composites the official asset.
+```
+memory/
+  sessions/              # Per-session notes with structured summaries
+    index.md             # Session history index (read at startup)
+  reference/             # Stable reference material
+    brand-voice.md       # Voice guidelines for all content
+    terms.md             # Terminology, acronyms, definitions
+    quick-ref.md         # Benchmark names, model lists, preferences
+    active-projects.md   # Current initiatives and timelines
+    stratix-sdk.md       # SDK methods and fields
+    people.md            # Team roles and relationships
+  context/               # Domain context that evolves
+    competitors.md       # Competitive positioning and battlecards
+    ai-landscape.md      # Current model info and comparisons
+    company.md           # Product details, pricing, ICPs
+    marketing-strategy.md # Strategy, budget, phases
+  evolving/              # Rapidly changing state
+    decisions-and-context.md  # Active decisions, product state
+    content-pipeline-status.md # What's blocked/unblocked
+  competitive-intel/     # CI scan baselines and history
+  projects/              # Project-specific context
+  rlhf/                  # Skill feedback and improvement data
+  archive/               # Retired guidelines and old context
+```
 
-### Meeting to Tasks
+### Session Continuity
 
-**What:** Converts Fireflies meeting summaries into Notion tasks automatically.
+Every session starts by reading the session index. If the current task needs prior context, it loads the relevant session notes. A catchup check compares recent Cowork sessions against saved notes and recovers any unsaved sessions automatically.
 
-**Process:** Parses action items from meeting summaries, identifies items assigned to Jake, creates Notion tasks with Status: Inbox so they surface in the daily task review. Called automatically by Morning Commander (daily) and Weekly Architect (weekly). Can also be triggered manually for any date range.
+This means context doesn't die between sessions. Strategic decisions, content preferences, meeting commitments, and competitive intel persist and compound.
 
-**Why this matters:** Before this, meeting action items either lived in a Fireflies summary no one checked or got mentioned in a Slack brief that got buried. Now every meeting commitment lands in the Notion task queue automatically.
+### Learning Memory
+
+A structured JSON store that captures preferences, content insights, copy patterns, and strategic decisions over time. Every content-producing skill reads learning memory at startup, so the system gets better the more it's used.
+
+---
+
+## CLAUDE.md (Operating Instructions)
+
+The system is governed by a `CLAUDE.md` file that acts as the operating manual for every session. It defines:
+
+- **Standing permissions:** What tools and integrations the system can use autonomously vs. what requires confirmation
+- **Hard rules:** Universal constraints (formatting rules, delivery paths, experiment cadence)
+- **Session startup protocol:** What to read and check at the beginning of every session
+- **Reference file routing:** Which memory files to read for which types of tasks
+- **Integration access:** How to connect to Stratix, Pipedrive, and other tools
+
+A sanitized version is included in this repo at [`CLAUDE.md`](CLAUDE.md).
 
 ---
 
@@ -161,20 +221,16 @@ Skills are reusable prompt-and-tool bundles that execute specific workflows. Eac
 
 **Language:** TypeScript (MCP SDK)
 
-Fireflies does not expose a REST API at accessible pricing tiers. This server wraps the Fireflies GraphQL API and exposes 4 tools to Claude:
+Wraps the Fireflies GraphQL API and exposes 4 tools to Claude:
 
 | Tool | What It Does |
 |------|-------------|
 | `fireflies_list_meetings` | List meetings with optional date range filtering |
 | `fireflies_get_transcript` | Full transcript with sentences and AI summary by meeting ID |
-| `fireflies_get_recent_transcripts` | Primary scheduled task tool: pull N days of meetings with summaries and action items |
+| `fireflies_get_recent_transcripts` | Pull N days of meetings with summaries and action items |
 | `fireflies_search_transcripts` | Keyword search across all transcript sentence text |
 
-**Integration:** Registered in Claude Desktop's MCP config. Available to all sessions and all 11 scheduled tasks automatically after restart.
-
 **Which agents use it:** Morning Commander, Midday Update, Weekly Architect, Weekly Performance Feedback, Monthly Strategist, Agent Review (health check), Meeting to Tasks.
-
-**Why Fireflies over tl;dv:** tl;dv requires a Business plan for API access. Fireflies offers GraphQL API access at significantly lower cost with equivalent data (transcripts, summaries, action items, speaker diarization).
 
 ---
 
@@ -184,32 +240,22 @@ Fireflies does not expose a REST API at accessible pricing tiers. This server wr
 
 An autonomous Twitter monitoring agent built in Python. Runs 24/7, classifies AI stories by relevance and urgency, drafts social content for high-value stories, and delivers to Telegram.
 
-### Cost Optimization Story
+### Cost Optimization
 
-The first version cost **$110/day** in API calls. Through systematic optimization:
-
-1. Added keyword pre-filter (free regex check before any API call)
-2. Combined classification and tiering into a single API call (was 2 separate calls)
-3. Reduced `max_tokens` from 256 to 16 for classification (only need HOT/WARM/SKIP)
-4. Only run expensive drafting pipeline for HOT stories
-5. WARM stories logged to DB, not processed further
-
-**Result: Under $10/week.** 91% cost reduction while maintaining classification quality.
+The first version cost **$110/day** in API calls. Through systematic optimization (keyword pre-filter, combined classification calls, reduced token limits, tiered processing), brought it down to **under $10/week**. 91% cost reduction while maintaining classification quality.
 
 ---
 
 ## Design Principles
-
-The system is built ADHD-first. Every design decision addresses a specific friction point:
 
 1. **One inbox, not six.** Every task from every source, including meeting action items from Fireflies, enters one Notion database. Views slice it by context.
 2. **The system comes to you.** Agents push to Slack. You don't go to a dashboard.
 3. **Priority-driven, not theme-driven.** No rigid theme days. The Morning Commander selects daily priorities based on deadlines, energy, and available time.
 4. **Friction-free capture.** 10 seconds max to add anything. Categorize later.
 5. **Built-in recovery.** Agents run whether you use the system or not. Miss a day, a week, a month: the system resets you.
-6. **Guardrails, not willpower.** Time-boxed blocks, structured comms windows, research timers.
-7. **Energy-aware scheduling.** Deep work mapped to medication peak hours. Lighter work after lunch. Evenings are structured recovery.
-8. **Meeting intel feeds the system.** Fireflies recordings feed every planning layer: daily priorities, weekly plans, monthly strategy. Commitments become tasks automatically.
+6. **Self-correcting.** The Strategic Drift Detector catches when skills and content fall out of sync with source-of-truth context files. The system notices its own inconsistencies.
+7. **Meeting intel feeds the system.** Fireflies recordings feed every planning layer: daily priorities, weekly plans, monthly strategy. Commitments become tasks automatically.
+8. **Context compounds.** The memory system means every session builds on the last. Preferences, decisions, and competitive intel persist and improve over time.
 
 ---
 
@@ -219,9 +265,9 @@ The system is self-improving through three feedback cycles:
 
 **Weekly (Sunday):** The Weekly Architect tracks completion rates, dropped categories, time accuracy, overflow patterns, and personal goals. Every priority in the week plan is tied to either a GA4 data point or a specific meeting commitment from Fireflies.
 
-**Monthly (1st):** The Monthly Strategist reviews 4-week trends: system adherence score (0-10), top wins, top friction points, recommended adjustments, and skill track progress. Fireflies data from the full month surfaces sales signals and leadership feedback that otherwise gets buried.
+**Monthly (1st):** The Monthly Strategist reviews 4-week trends: system adherence score (0-10), top wins, top friction points, recommended adjustments. Fireflies data from the full month surfaces sales signals and leadership feedback.
 
-**Quarterly:** The Monthly Strategist triggers a deeper audit: Is the Notion structure still working? Are recurring tasks still relevant? Have agents become noise instead of signal? Agents suggest changes; they don't make them automatically.
+**Quarterly:** Deeper audit: Is the Notion structure still working? Are recurring tasks still relevant? Have agents become noise instead of signal? Agents suggest changes; they don't make them automatically.
 
 ---
 
@@ -232,33 +278,29 @@ The system is self-improving through three feedback cycles:
 | Agent orchestration | Claude (Anthropic) via Cowork scheduled tasks | Included in Claude subscription |
 | Standalone agents | Python + Claude API (Sonnet) | ~$10/week for Story Scout |
 | Task management | Notion (Master Tasks, Projects, Marketing Calendar, Follow-Ups) | Free tier |
-| Delivery | Slack (all agent output to DM or channel) | Existing |
+| Delivery | Slack (all agent output to DM) | Existing |
+| CRM | Pipedrive via MCP connector | Existing subscription |
 | SEO/Competitive data | Ahrefs via MCP connector | Existing subscription |
 | Analytics | Google Analytics 4 via custom GA4 MCP server | Free |
 | Meeting recordings | Fireflies via custom TypeScript MCP server | Pro plan |
 | Calendar | Google Calendar (time-blocking, meeting awareness) | Existing |
 | Monitoring | Twitter API via Story Scout | API costs above |
 | Messaging | Telegram Bot API (Story Scout delivery) | Free |
+| Memory | File-based persistent context (50+ files, 8 categories) | Free |
 
 ---
 
-## What's Next
+## What's Changed Since v1
 
-- **Approval queue execution:** Currently the Morning Brief surfaces items and I manually draft. Closing the loop so "post 1, 3" triggers drafting, review, and scheduling automatically.
-- **Buffer scheduling integration:** Connect the Social Drafter output directly to Buffer so approved posts get queued without manual copy-paste.
-- **Fireflies MCP open source:** The custom Fireflies GraphQL MCP server may be worth releasing as a standalone repo. Basic wrapper but saves anyone building on Fireflies significant setup time.
+The initial version (March 2026) had 7 agents and 4 skills. Since then:
 
----
-
-## About
-
-I'm Jake Meany, a solo marketer at an AI startup. I built this system because the alternative was burning out trying to do 5 people's jobs manually.
-
-The thesis: if you understand what the work actually is (the specific steps, rules, and judgment calls), you can teach AI to do the repetitive parts and focus your human hours on the parts that actually need a human.
-
-This isn't a framework or a template. It's a working system that runs every day. The agents file their reports whether I'm paying attention or not. That's the point.
-
-**Tools used to build this:** Claude Code, Claude Cowork, Python, TypeScript, MCP (Model Context Protocol), Ahrefs API, Fireflies GraphQL API, Twitter API, Telegram Bot API, Notion, Slack, Google Calendar, Google Analytics 4.
+- **Agents:** 7 to 11 (added Reactive Intel Monitor, John Q Batch, Midday Update, Meeting to Tasks)
+- **Skills:** 4 to 16 (added Social Content Drafter, Blog Writer Pipeline, Blog Production Pipeline, LinkedIn Education Drafter, Content Repurposer, Benchmark Drop, Strategic Drift Detector, Viral Content Scout, Performance Analytics, Meeting Prep Generator, Post-Meeting Processor, Influencer Blitz Tracker, Phase Tracker, Shareable Report Formatter)
+- **Memory system:** Built from scratch. 50+ persistent files across 8 categories. Session continuity. Learning memory that compounds.
+- **CRM integration:** Added Pipedrive MCP for deal tracking, meeting prep, and post-meeting processing
+- **Self-correction:** Strategic Drift Detector catches when the system falls out of sync with itself
+- **Copy Reviewer:** Iterated through 3 versions with structured eval cycles (88% to 96% to 100% pass rate)
+- **CLAUDE.md:** Formalized operating instructions with standing permissions, hard rules, and reference file routing
 
 ---
 
@@ -267,40 +309,50 @@ This isn't a framework or a template. It's a working system that runs every day.
 ```
 jake-os/
   README.md                   # This file
+  CLAUDE.md                   # Operating instructions (sanitized)
   architecture/
     system-overview.md        # Full system design document
     agent-specs/              # Individual agent specifications
-      morning-commander.md
-      morning-brief.md
-      social-drafter.md
-      midday-update.md
-      reactive-intel-monitor.md
-      weekly-performance-feedback.md
-      weekly-architect.md
-      monthly-strategist.md
-      agent-review.md
-      john-q-batch.md
-      meeting-to-tasks.md
   skills/
-    copy-reviewer/
-      README.md               # Skill overview + eval results
-      rules.md                # The 12 review rules (sanitized)
-    ci-scanner/
-      README.md               # Skill overview
-      framework.md            # Scan framework (sanitized)
-    data-viz/
-      README.md               # Skill overview + brand system
-    logo-compositing/
-      README.md               # Skill overview
-    meeting-to-tasks/
-      README.md               # Fireflies to Notion pipeline
-  story-scout/
-    README.md                 # Points to separate repo
+    copy-reviewer/            # Brand voice review engine (12 rules, 47 banned phrases)
+    ci-scanner/               # Weekly competitive intelligence
+    data-viz/                 # Branded chart/graph generation
+    logo-compositing/         # Brand logo watermarking
+    social-content-drafter/   # Core social content creation
+    blog-writer-pipeline/     # End-to-end article production
+    blog-production-pipeline/ # Full blog workflow with CMS
+    linkedin-education-drafter/ # LinkedIn enterprise content
+    content-repurposer/       # Multi-platform content adaptation
+    benchmark-drop/           # Benchmark release content workflow
+    strategic-drift-detector/ # Self-correction system
+    viral-content-scout/      # Engagement opportunity monitoring
+    performance-analytics/    # Marketing performance analysis
+    meeting-prep-generator/   # CRM-powered meeting briefs
+    post-meeting-processor/   # Meeting follow-up automation
+    influencer-blitz-tracker/ # Campaign tracking
+    phase-tracker/            # 90-day plan progress
+    shareable-report-formatter/ # Report formatting for stakeholders
+  memory/
+    README.md                 # Memory system architecture
   docs/
     cost-optimization.md      # Story Scout cost reduction case study
-    design-principles.md      # ADHD-first design philosophy
+    design-principles.md      # Design philosophy
     feedback-loops.md         # Self-improving system design
-    fireflies-mcp.md          # Custom MCP server architecture
+    session-continuity.md     # How context persists across sessions
+  story-scout/
+    README.md                 # Points to separate repo
 ```
 
 > Note: Proprietary company data, API keys, and brand-specific content have been removed. This repo documents the architecture, design decisions, and frameworks. Implementation details are available on request.
+
+---
+
+## About
+
+I'm Jake Meany, a solo marketer at an AI startup. I built this system because the alternative was trying to do 5 people's jobs manually.
+
+The thesis: if you understand what the work actually is (the specific steps, rules, and judgment calls), you can teach AI to do the repetitive parts and focus your human hours on the parts that actually need a human.
+
+This isn't a framework or a template. It's a working system that runs every day. The agents file their reports whether I'm paying attention or not. That's the point.
+
+**Tools used to build this:** Claude Code, Claude Cowork, Python, TypeScript, MCP (Model Context Protocol), Ahrefs API, Fireflies GraphQL API, Twitter API, Telegram Bot API, Pipedrive, Notion, Slack, Google Calendar, Google Analytics 4.
