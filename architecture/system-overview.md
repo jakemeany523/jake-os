@@ -43,7 +43,7 @@ Agents never take irreversible actions. They prepare, recommend, and draft. The 
 
 Agents don't communicate directly with each other. Each reads from shared data sources (Notion, Slack, filesystem) and writes its output to a designated channel. This keeps the system simple, debuggable, and easy to modify.
 
-Future improvement: chain agents so Morning Brief output feeds into Social Drafter input, creating a daily pipeline from news to published content.
+~~Future improvement:~~ **Implemented.** Morning Brief output (7:00 AM) now feeds into Social Drafter input (7:30 AM), creating a daily pipeline from news to published content. The Social Drafter reads the brief's POST/MONITOR items as primary editorial input.
 
 ---
 
