@@ -30,3 +30,11 @@ The core content creation skill. Pulls live evaluation data from Stratix, genera
 - Graphics follow strict brand identity: specific hex colors, logo placement, no dates
 - Platform-specific formatting (Twitter character limits, LinkedIn paragraph structure)
 - Experiment variants only generated when explicitly requested
+
+## Video Asset Generation (New)
+
+Data-heavy posts now auto-trigger branded video rendering via the LayerLens Video skill:
+- **Benchmark Drop, Model Comparison, 3+ data points:** Renders horizontal + vertical mp4
+- **Counter-narrative, Insight, Educational, Reactive:** Static graphic only
+- Falls back to static graphic if render fails (never blocks a post)
+- Both video and static graphic delivered for Jake to choose
