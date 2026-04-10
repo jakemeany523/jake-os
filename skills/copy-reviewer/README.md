@@ -41,7 +41,7 @@ COPY REVIEW: [PASS/FAIL]
 Rule 1 (Banned Phrases): PASS
 Rule 2 (AI Slop): PASS
 Rule 3 (Em Dash): FAIL - Found 2 em dashes on lines 3 and 7
-  Fix: Replace "the platform — which supports" with "the platform, which supports"
+  Fix: Replace "the platform, which supports" with "the platform, which supports"
 Rule 4 (So What): PASS
 ...
 
