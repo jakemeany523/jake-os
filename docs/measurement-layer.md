@@ -135,7 +135,7 @@ Pattern is always: *artifact → rubric → judge → score → log → (optiona
 - [x] `evaluator-optimizer` skill written (workspace `.claude/skills/`)
 - [x] `quality-judge` skill written (workspace `.claude/skills/`)
 - [x] Rubrics: social-post (v2026-04-09), client-linkedin (v2026-04-09b), email (v2026-04-09), ci-brief (v2026-04-09)
-- [x] Profile loaders with verify_paths: the company, house-profile
+- [x] Profile loaders with verify_paths: house (company), house-profile
 - [x] Regression seeds: house-social (10), client-linkedin (6 incl M6 loop stress test)
 - [x] Log file initialized + 12 baseline entries: `memory/evolving/quality-scores.jsonl`
 - [x] Query tool: `scripts/quality_log.py` (--summary, --by dimension, --bias-check, --weekly-digest)
@@ -164,5 +164,5 @@ Pattern is always: *artifact → rubric → judge → score → log → (optiona
 ### Known gaps (documented, not blocking)
 - No human-override entries yet (first capture happens when Jake edits a scored draft)
 - No multi-iteration loop test (M6 seed exists but hasn't been run)
-- No per-client the client test (needs a a client-specific seed)
+- No per-client test (needs a client-specific seed)
 - `learning-memory.json` integration untested (file not yet populated)

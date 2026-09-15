@@ -21,7 +21,7 @@ Does it sound like Jake? First-person ("I ran", "I put"), direct, slightly irrev
 Does it cite a concrete number, model name, benchmark, dollar amount, or timestamp? Vague ("recent benchmarks show") is 3-4. One specific number in context is 7. Multiple specific numbers with a named model + benchmark is 9-10.
 
 ### 4. narrative_alignment
-Does it connect to the the current positioning thesis? A benchmark drop with no narrative connection is an auto 3. A benchmark drop that frames the result as evidence for a pillar is 7-9. A counter-narrative piece that reframes how practitioners should think about eval is 9-10.
+Does it connect to the current positioning thesis? An eval result with no narrative connection is an auto 3. An eval result that frames the result as evidence for a pillar is 7-9. A counter-narrative piece that reframes how practitioners should think about eval is 9-10.
 
 ### 5. shareability
 Would a practitioner DM this to a coworker or quote-tweet it? Corporate announcements: 3-4. Educational but dry: 5-6. Has a "wait, what?" moment: 7-8. Contains a number or claim that forces a reaction: 9-10.

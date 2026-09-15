@@ -33,7 +33,7 @@ With UTM tagging:
 `social` / `email` / `partner` / `paid` / `referral`
 
 **Valid Campaigns** (utm_campaign):
-`eval-drop` / `thesis-narrative` / `product-demo` / `education-hub` / `agent-eval` / `influencer-collab` / `website-rebuild` / `show-hn`
+`eval-drop` / `narrative` / `demo` / `education-hub` / `agent-eval` / `partner-collab` / `website-launch`
 
 **Content tag** (utm_content):
 Auto-generated as `MMDD-short-desc`. Example: `0309-claude-swebench-drop`

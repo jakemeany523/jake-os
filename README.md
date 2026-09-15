@@ -76,7 +76,7 @@ All scheduled agents run on cron schedules via Claude's scheduled task system. T
 |-------|----------|-------------|
 | **Morning Commander** | 6:15 AM daily | Reads Google Calendar, Notion tasks, follow-ups, fitness plan. Delivers: today's top 5 priorities, meetings with prep notes, specific workout (phase-aware from 12-week plan), overdue items, evening plan. The "executive assistant" agent. |
 | **Morning Brief** | 7:00 AM daily | The chief-of-staff. Scans overnight AI/model/benchmark news (web search + GitHub trending + Twitter signals). Checks all Slack channels for action items. Pulls Ahrefs competitor metrics and SEO data. Surfaces new product evaluations. Outputs an approval queue: numbered items tagged POST/MONITOR/IGNORE. I reply "post 1, 3" and drafts get created. |
-| **Social Drafter** | 7:30 AM daily | Requires Chrome extension for live data. Reads the Morning Brief output (7:00 AM) as primary editorial input. Checks @the company X and LinkedIn feeds to avoid repeats. Scouts the platform (the internal app) for new evaluations and LL Marketing workspace for new tools/data. Cross-references the Bleeding-Edge Benchmark Reference Guide. Creates branded graphics via the Data Viz + Logo skills. Drafts Twitter/X and LinkedIn posts. Runs every draft through the Copy Reviewer automatically. Sends Slack DM if Chrome is disconnected; waits up to 30 minutes, then skips. Falls back to evergreen a premium platform feature content when nothing new is available. |
+| **Social Drafter** | 7:30 AM daily | Requires browser automation for live data. Reads the Morning Brief output (7:00 AM) as primary editorial input. Checks the company X and LinkedIn feeds to avoid repeats. Scouts the internal eval platform for new results and the marketing workspace for new tools and data. Cross-references the benchmark reference guide. Creates branded graphics via the Data Viz + Logo skills. Drafts Twitter/X and LinkedIn posts. Runs every draft through the Copy Reviewer automatically. Sends a Slack DM if the browser tool is disconnected; waits up to 30 minutes, then skips. Falls back to evergreen platform content when nothing new is available. |
 
 ### Weekly Agents
 
@@ -96,7 +96,7 @@ All scheduled agents run on cron schedules via Claude's scheduled task system. T
 
 | Pipeline | Cadence | What It Does |
 |----------|---------|-------------|
-| **Audience Intelligence** | Monday 7:15 AM (10 min) | Runs `mixpanel-weekly-intel.py` to pull last 7 days of site behavior. Identifies high-intent users by behavior score. Exports Twitter Analytics engager list. Imports into Clay for enrichment and ateam persona scoring. Combined score routes contacts: 13+ to the CRM (the sales pipeline), 8-12 to Mailchimp nurture sequence. Updates weekly ICP tracking table. Closes the blindspot between content performance and audience identity. |
+| **Audience Intelligence** | Monday 7:15 AM (10 min) | Runs `mixpanel-weekly-intel.py` to pull last 7 days of site behavior. Identifies high-intent users by behavior score. Exports the Twitter Analytics engager list. Imports into an enrichment tool for persona scoring. Combined score routes contacts: 13+ to the CRM as leads, 8-12 to a nurture sequence. Updates the weekly ICP tracking table. Closes the blindspot between content performance and audience identity. |
 
 ---
 
@@ -137,7 +137,7 @@ Skills are reusable prompt-and-tool bundles that execute specific workflows. Eac
 
 **Trigger:** Runs as the Social Drafter agent's core skill (7:30 AM daily). Also invocable manually ("draft social," "create posts," "run the daily drafter").
 
-**Pipeline:** Reads Morning Brief output for editorial direction. Checks @the company X and LinkedIn feeds to build a "do not repeat" list. Scouts the platform (the internal app) for new evaluations via Chrome. Cross-references the Bleeding-Edge Benchmark Reference Guide. Drafts Twitter/X (3-4 posts) and LinkedIn (1-2 posts). Creates branded graphics. Runs every draft through the 12-rule Copy Reviewer. Revises until clean. Delivers a ready-to-publish package to `social-drafts/YYYY-MM-DD/`.
+**Pipeline:** Reads Morning Brief output for editorial direction. Checks the company X and LinkedIn feeds to build a "do not repeat" list. Scouts the internal eval platform for new results via browser automation. Cross-references the benchmark reference guide. Drafts Twitter/X (3-4 posts) and LinkedIn (1-2 posts). Creates branded graphics. Runs every draft through the 12-rule Copy Reviewer. Revises until clean. Delivers a ready-to-publish package to `social-drafts/YYYY-MM-DD/`.
 
 **Chrome dependency:** Requires the Claude in Chrome extension for all data gathering. Sends a Slack DM notification if disconnected, waits up to 30 minutes, then skips. No web search fallbacks.
 
@@ -148,18 +148,18 @@ Skills are reusable prompt-and-tool bundles that execute specific workflows. Eac
 
 **Run:** Monday mornings, manually. `python3 mixpanel-weekly-intel.py`
 
-**Output:** Markdown report with high-intent user list, sign-up data, intent page visits, UTM attribution (once live), and specific action items (who to push to Clay/the CRM this week).
+**Output:** Markdown report with high-intent user list, sign-up data, intent page visits, UTM attribution (once live), and specific action items (who to push to enrichment or the CRM this week).
 
-**Integration:** Feeds directly into Clay enrichment workflow. Combined behavior score + Clay tier score determines the CRM routing. Full spec: `skills/audience-intelligence/README.md`
+**Integration:** Feeds directly into the enrichment workflow. Combined behavior score plus tier score determines CRM routing. Full spec: `skills/audience-intelligence/README.md`
 
 ### UTM Link Generator (Audience Intelligence)
 **What:** Python script that generates properly tagged UTM links for all social posts, newsletters, and influencer content. Enforces consistent parameter values so Mixpanel attribution data is clean.
 
 **Run:** Monday mornings, before loading content into Buffer. `python3 utm-link-generator.py --quick` for the day's standard link set.
 
-**Why it exists:** Without consistent UTM tagging, every example.com link in a tweet looks like "Direct" in Mixpanel. This script eliminates that gap and makes content-to-pipeline attribution possible.
+**Why it exists:** Without consistent UTM tagging, every link from a social post looks like "Direct" in Mixpanel. This script eliminates that gap and makes content-to-pipeline attribution possible.
 
-**Rule:** Never post a naked example.com link. Every link gets UTM parameters. Full spec: `skills/utm-generator/README.md`
+**Rule:** Never post a naked link. Every external link gets UTM parameters. Full spec: `skills/utm-generator/README.md`
 
 ---
 
@@ -257,18 +257,18 @@ After running for 4+ weeks:
 | Calendar | Google Calendar (time-blocking, meeting awareness) | Existing |
 | Monitoring | Twitter API via Story Scout | API costs above |
 | Messaging | Telegram Bot API (Story Scout delivery) | Free |
-| Audience intelligence | Mixpanel Export API + Clay + the CRM + Mailchimp | Mixpanel: existing; Clay Starter: $134/mo |
+| Audience intelligence | Mixpanel Export API + enrichment tool + CRM + email platform | Mixpanel: existing; enrichment: $134/mo |
 | UTM attribution | Python script (utm-link-generator.py) | Free |
 
 ---
 
 ## What's Next
 
-- **Audience Intelligence (shipped March 2026):** Mixpanel behavior scoring + Clay enrichment + ateam persona classification + the CRM routing. Closes the blindspot between content performance and audience identity.
+- **Audience Intelligence (shipped March 2026):** Mixpanel behavior scoring + enrichment + persona classification + CRM routing. Closes the blindspot between content performance and audience identity.
 - **Blog writer pipeline:** Research, write, SEO/AEO check, publish. The full content loop from signal to published article.
 - **Approval queue execution:** ~~Currently the Morning Brief surfaces items and I manually draft.~~ Partially closed: Morning Brief output now feeds directly into the Social Drafter as editorial input. Next step: "post 1, 3" triggers drafting, review, and scheduling automatically from Slack.
 - **Weekly metrics dashboard:** Ahrefs + Twitter + LinkedIn analytics pulled into a single branded graphic every Monday.
-- **UTM attribution closing the loop:** Once Mixpanel `track_utm: true` is set (pending engineering), every social post will be traceable to specific site visits and sign-ups. Content-to-pipeline attribution becomes fully measurable.
+- **UTM attribution closing the loop:** Once the analytics platform is initialized with UTM tracking enabled, every social post will be traceable to specific site visits and sign-ups. Content-to-pipeline attribution becomes fully measurable.
 - **Bookmark saver:** Twitter/LinkedIn bookmark to summary to searchable archive.
 
 ---
@@ -315,7 +315,7 @@ jake-os/
       references/
         LLM-Agent-Benchmark-Reference-Guide.docx
     audience-intelligence/
-      README.md           # Mixpanel weekly intel script overview
+      README.md           # Analytics weekly intel script overview
     utm-generator/
       README.md           # UTM link generator overview
   story-scout/
@@ -326,4 +326,4 @@ jake-os/
     feedback-loops.md     # Self-improving system design
 ```
 
-> Note: Proprietary company data, API keys, and brand-specific content have been removed. This repo documents the architecture, design decisions, and frameworks. Implementation details are available on request.
+> Note: implementation scripts, credentials, and company-specific configuration are not included in this repo. It documents the architecture, design decisions, and frameworks. Scripts are available on request.
